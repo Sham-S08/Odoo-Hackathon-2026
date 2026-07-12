@@ -48,6 +48,7 @@ router.use('/activity-logs', require('../features/activityLogs/activityLogs.rout
 
 // Search
 router.use('/search', require('../features/search/search.routes'));
-
+//health
+ router.use('/test', require('../health.js') )
 module.exports = router;
 

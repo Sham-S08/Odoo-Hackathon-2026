@@ -35,7 +35,7 @@ module.exports = {
   },
 
   ai: {
-    maintenanceInsightsUrl: process.env.AI_MAINTENANCE_INSIGHTS_URL || 'http://127.0.0.1:8000/maintenance-insights'
+    maintenanceInsightsUrl: process.env.AI_MAINTENANCE_INSIGHTS_URL || 'http://127.0.0.1:8000/api/ai/maintenance-insights'
   },
 
 
