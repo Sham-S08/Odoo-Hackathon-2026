@@ -1,234 +1,489 @@
-# AssetFlow AI Microservice
+# AssetFlow
 
-This microservice acts as the predictive analysis engine for the **AssetFlow Enterprise Asset & Resource Management System**. It is an independent FastAPI microservice built to perform offline diagnostic assessments (Repair vs. Retire) on industrial equipment based on physical condition, age, and maintenance frequency.
+**Enterprise Asset & Resource Management ERP with AI-Powered Maintenance Insights**
 
----
-
-## Technical Stack
-*   **Language:** Python 3.12+
-*   **Framework:** FastAPI
-*   **ASGI Server:** Uvicorn
-*   **Data Validation:** Pydantic v2
-*   **Settings Management:** Pydantic-settings
+> Built for **Odoo Hackathon 2026**
 
 ---
 
-## Folder Structure
+# Overview
+
+AssetFlow is a comprehensive **Enterprise Resource Planning (ERP)** system designed for efficient tracking, allocation, and management of organizational assets and shared resources.
+
+The platform features a modern React frontend, a robust Node.js backend, a database-driven architecture, and an independent AI microservice that provides intelligent maintenance recommendations (Repair vs. Retire) without blocking the core application workflow.
+
+---
+
+# Key Highlights
+
+- Role-Based Access Control (Admin, Asset Manager, Department Head, Employee)
+- Complete Asset Lifecycle Management
+- Resource Booking with Conflict Prevention
+- Maintenance Workflow with AI-Based Insights
+- Asset Audits and Reporting
+- Real-Time Notifications
+- Activity Logs
+- AI Maintenance Recommendation Service
+
+---
+
+# Tech Stack
+
+| Layer | Technology |
+|--------|------------|
+| Frontend | React + Next |
+| Backend | Node.js + Express |
+| Database | MongoDB |
+| AI Service | Python + FastAPI |
+| Authentication | JWT + RBAC |
+| APIs | REST APIs |
+
+---
+
+# Features
+
+## Authentication & Dashboard
+
+- Secure Login
+- Role-Based Access
+- Dashboard Analytics
+- Pending Approvals
+- Maintenance Summary
+
+---
+
+## Organization Setup
+
+- Department Management
+- Employee Directory
+- Asset Categories
+- Role Management
+
+---
+
+## Asset Management
+
+- Register Assets
+- Asset Images
+- Asset History
+- Asset Tags
+- Lifecycle Tracking
+
+Asset States
+
+- Available
+- Allocated
+- Under Maintenance
+- Retired
+
+---
+
+## Allocation & Transfer
+
+- Asset Allocation
+- Asset Return
+- Expected Return Dates
+- Transfer Requests
+- Approval Workflow
+
+---
+
+## Resource Booking
+
+Book shared organizational resources including:
+
+- Meeting Rooms
+- Vehicles
+- Equipment
+
+Features include:
+
+- Calendar View
+- Conflict Detection
+- Overlapping Booking Prevention
+
+---
+
+## Maintenance Management
+
+- Raise Maintenance Requests
+- Upload Images
+- Priority Levels
+- Approval Workflow
+- Status Tracking
+- AI Maintenance Insights
+
+---
+
+## Asset Audit
+
+- Create Audit Cycles
+- Assign Auditors
+- Generate Reports
+- Audit Status Tracking
+
+---
+
+## Reports
+
+Generate reports for:
+
+- Asset Utilization
+- Maintenance History
+- Idle Assets
+- Department Assets
+- Audit Reports
+
+Export Options
+
+- PDF
+- Excel
+- CSV
+
+---
+
+## Notifications
+
+- Real-Time Notifications
+- Activity Logs
+- Email Notifications (Optional)
+
+---
+
+# Project Structure
 
 ```text
-ai/
-├── app/                     # Core application source
-│   ├── api/                 # Endpoint routing logic
-│   │   ├── v1/              # API Version 1 routers
-│   │   │   ├── endpoints/   # Endpoint controllers (health, insights)
-│   │   │   │   ├── health.py
-│   │   │   │   └── maintenance_insights.py
-│   │   │   └── router.py    # Merged API routes
-│   │   └── deps.py          # Dependency injection functions
-│   ├── core/                # System settings, constants, and logger setup
-│   │   ├── config.py        # Environment variables loader
-│   │   ├── constants.py     # Centralized score thresholds and weights
-│   │   ├── exceptions.py    # Global exception handler
-│   │   └── logging_config.py# Unified logging layout
-│   ├── models/              # Internal ML representations
-│   ├── schemas/             # Request/Response schemas
-│   │   ├── asset.py         # Asset validation schema
-│   │   ├── maintenance.py   # Maintenance history log schema
-│   │   ├── request.py       # API Request schema
-│   │   ├── response.py      # API Response schema
-│   │   └── error.py         # Standard Error schema
-│   ├── services/            # Calculation and inference rules
-│   │   ├── maintenance_service.py # Core insights evaluation service
-│   │   └── rule_engine.py   # Decision scoring rule engine
-│   ├── utils/               # Common helper utilities
-│   └── main.py              # Application entrypoint
-├── tests/                   # Pytest test suite
-│   ├── conftest.py          # Shared test fixtures
-│   ├── test_endpoints.py    # API endpoints validation tests
-│   ├── test_health.py       # Health check test
-│   ├── test_rule_engine.py  # Rule engine scoring tests
-│   └── test_schemas.py      # Schema verification tests
-├── docs/                    # Architecture diagrams and specifications
-├── .env.example             # Configuration settings template
-├── .env                     # Local settings instance (git-ignored)
-├── README.md                # Deployment and developer manual
-└── requirements.txt         # Package requirements manifest
+AssetFlow/
+│
+├── ai/                 # FastAPI AI microservice
+├── backend/            # Node.js + Express backend
+├── frontend/           # Next.js frontend
+├── tests/              # Test cases
+│
+├── .env.example        # Environment variables template
+├── .gitignore          # Git ignore rules
+├── PROJECT_TREE.md     # Detailed project structure
+└── README.md           # Project documentation`
 ```
 
 ---
 
-## Environment Variables Configuration
+# Local Development Setup
 
-The application loads settings from the environment or a `.env` file in the root directory.
+## Prerequisites
 
-| Variable Name | Type | Default Value | Description |
-| :--- | :--- | :--- | :--- |
-| `APP_NAME` | String | `"AssetFlow AI Service"` | The name of the microservice. |
-| `APP_VERSION` | String | `"1.0.0"` | Current deployable release version. |
-| `HOST` | String | `"127.0.0.1"` | Network interface to bind the server. |
-| `PORT` | Integer | `8000` | Port on which the server listens. |
-| `LOG_LEVEL` | String | `"info"` | System log level (`debug`, `info`, `warning`, `error`). |
+Install the following before starting:
 
----
-
-## Installation & Setup Guide
-
-Follow these steps to establish your local development virtual environment:
-
-### 1. Create a Virtual Environment
-In the root directory of the AI microservice, execute the virtual environment command:
-```bash
-python -m venv .venv
-```
-
-### 2. Activate the Virtual Environment
-Activate the environment according to your operating system shell:
-*   **Windows (PowerShell):**
-    ```powershell
-    .venv\Scripts\Activate.ps1
-    ```
-*   **Windows (Command Prompt):**
-    ```cmd
-    .venv\Scripts\activate.bat
-    ```
-*   **Linux / macOS (Bash/Zsh):**
-    ```bash
-    source .venv/bin/activate
-    ```
-
-### 3. Install Core Dependencies
-Install the required application packages listed in the manifest file:
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org --trusted-host pypi.python.org
-```
+- Node.js 20+
+- npm
+- Python 3.12+
+- Git
+- Visual Studio Code
 
 ---
 
-## Running the Application
+# Frontend Setup
 
-Ensure the virtual environment is active, then launch the Uvicorn ASGI server with hot-reload enabled:
+Navigate to the frontend directory.
 
 ```bash
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+cd frontend
 ```
 
----
-
-## Core API Endpoints
-
-### 1. Health Status
-*   **Endpoint:** `/health`
-*   **Method:** `GET`
-*   **Description:** Returns the current operational status of the service.
-*   **Response Example:**
-    ```json
-    {
-      "status": "healthy",
-      "service": "AssetFlow AI Service",
-      "version": "1.0.0"
-    }
-    ```
-
-### 2. Maintenance Insights
-*   **Endpoint:** `/api/ai/maintenance-insights` (also available at `/api/v1/ai/maintenance-insights`)
-*   **Method:** `POST`
-*   **Description:** Evaluates asset metrics and returns a Repair vs. Retire recommendation with an asset health score.
-*   **Request Payload Example:**
-    ```json
-    {
-      "asset": {
-        "id": 42,
-        "asset_tag": "AST-HVAC-001",
-        "name": "Server Room AC Unit",
-        "category": "HVAC",
-        "age": 36,
-        "condition": "Fair"
-      },
-      "maintenance_history": [
-        {
-          "date": "2026-05-15",
-          "issue": "Replaced standard compressor filter",
-          "status": "Resolved"
-        }
-      ]
-    }
-    ```
-*   **Response Payload Example:**
-    ```json
-    {
-      "recommendation": "REPAIR",
-      "asset_health": 72,
-      "reason": "Repair recommended. The asset exhibits wear (condition: 'Fair') but remains viable under normal maintenance."
-    }
-    ```
-
----
-
-## API Documentation Links
-
-When the application is running, the Swagger interactive UI is accessible locally:
-
-*   **Interactive Swagger UI:** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-*   **Static ReDoc UI:** [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
-
----
-
-## Running the Test Suite
-
-To run the unit and integration tests, run the following command in the virtual environment:
+Install dependencies.
 
 ```bash
-pytest
+npm install
+```
+
+Create a `.env` file.
+
+```env
+NEXT_API_URL=http://localhost:5000/api
+```
+
+Start the development server.
+
+```bash
+npm run dev
+```
+
+Frontend URL
+
+```
+http://localhost:3000
 ```
 
 ---
 
-## AI Integration Workflow Diagram
+# Backend Setup
 
-The sequence diagram illustrates how the AI service integrates with the core ERP Node.js backend.
+Navigate to the backend directory.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Employee as Employee
-    participant ERP as Node.js Backend
-    participant DB as SQL Database
-    participant AI as FastAPI Service
+```bash
+cd backend
+```
 
-    Employee->>ERP: Submit Maintenance Request
-    activate ERP
-    ERP->>DB: Save Request (Transaction Commit)
-    activate DB
-    DB-->>ERP: Confirmation ID
-    deactivate DB
-    ERP-->>Employee: Success Response (ERP thread freed)
-    deactivate ERP
+Install dependencies.
 
-    Note over ERP, AI: Asynchronous Call Hook (Non-blocking)
+```bash
+npm install
+```
 
-    rect rgb(240, 248, 255)
-        ERP->>AI: POST /api/ai/maintenance-insights (Asset & History)
-        activate AI
-        AI->>AI: Evaluate Health Score & Repair/Retire Rules
-        AI-->>ERP: JSON Recommendation (recommendation, asset_health, reason)
-        deactivate AI
-        activate ERP
-        ERP->>DB: Update request record with recommendation values
-        ERP-->>Employee: Push real-time update (WebSocket/SSE)
-        deactivate ERP
-    end
+If Axios is missing, install it manually.
+
+```bash
+npm install axios
+```
+
+Create a `.env` file.
+
+```env
+PORT=5000
+
+MONGO_URI=<your_mongodb_connection_string>
+
+JWT_SECRET=<your_jwt_secret>
+
+AI_MAINTENANCE_URL=http://127.0.0.1:8001/api/ai/maintenance-insights
+
+CORS_ORIGIN=http://localhost:3000
+```
+
+Run the backend.
+
+Development Mode
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+node server.js
+```
+
+Backend URL
+
+```
+http://localhost:5000
 ```
 
 ---
 
-## Integration Notes for the Backend Team
+# AI Service Setup
 
-To integrate the AI Module successfully with the Node.js/Express backend, please follow these guidelines:
+Navigate to the AI folder.
 
-1.  **Asynchronous Call Hook:** 
-    Trigger the call to the AI service **only after** the maintenance request has been successfully committed to the database. Wrap the HTTP request using a background worker (e.g. queue, event emitter, or `setImmediate`) to keep it out of the main request-response pipeline.
-2.  **Strict Timeout Settings:**
-    Enforce a request timeout limit of **2000ms** on your HTTP client when calling the `/api/ai/maintenance-insights` endpoint.
-3.  **Graceful Fallback:**
-    If the AI service is offline, returns a `500` error, or times out, catch the exception, write a warning log, and allow the ERP workflow to continue unimpeded. The AI recommendations are supplementary insights and are optional. Do not disrupt the operator's experience.
+```bash
+cd ai
+```
+
+Install dependencies.
+
+```bash
+py -m pip install -r requirements.txt
+```
+
+If needed, install packages manually.
+
+```bash
+pip install fastapi uvicorn pydantic pydantic-settings python-dotenv pytest httpx
+```
+
+Run the AI service.
+
+```bash
+py -m uvicorn app.main:app --host 127.0.0.1 --port 8001 --reload
+```
+
+AI Service URLs
+
+Swagger Documentation
+
+```
+http://127.0.0.1:8001/docs
+```
+
+Health Check
+
+```
+http://127.0.0.1:8001/health
+```
+
+---
+
+# Running the Entire Project
+
+Open three terminals.
+
+### Terminal 1
+
+Frontend
+
+```bash
+cd frontend
+npm run dev
+```
+
+---
+
+### Terminal 2
+
+Backend
+
+```bash
+cd backend
+node server.js
+```
+
+or
+
+```bash
+npm run dev
+```
+
+---
+
+### Terminal 3
+
+AI Service
+
+```bash
+cd ai
+
+py -m uvicorn app.main:app --host 127.0.0.1 --port 8001 --reload
+```
+
+---
+
+# Default Ports
+
+| Service | Port |
+|----------|------|
+| Frontend | 3000 |
+| Backend | 5000 |
+| AI Service | 8001 |
+
+---
+
+# API Documentation
+
+After starting the services:
+
+Backend APIs
+
+```
+http://localhost:5000/api
+```
+
+AI Swagger Documentation
+
+```
+http://127.0.0.1:8001/docs
+```
+
+AI Health Endpoint
+
+```
+http://127.0.0.1:8001/health
+```
+
+Example AI Endpoint
+
+```http
+POST /api/ai/maintenance-insights
+```
+
+---
+
+# Common Issues
+
+### Node modules not found
+
+```bash
+npm install
+```
+
+---
+
+### Axios module missing
+
+```bash
+npm install axios
+```
+
+---
+
+### Python command not recognized on Windows
+
+Use:
+
+```bash
+py
+```
+
+instead of
+
+```bash
+python
+```
+
+---
+
+### Backend cannot connect to AI service
+
+Ensure the AI server is running before starting the backend.
+
+---
+
+### CORS Issues
+
+Verify that
+
+```env
+CORS_ORIGIN=http://localhost:3000
+```
+
+matches the frontend URL.
+
+---
+
+# Contributing
+
+1. Fork the repository.
+
+2. Create a feature branch.
+
+```bash
+git checkout -b feature/your-feature
+```
+
+3. Commit your changes.
+
+```bash
+git commit -m "Add your feature"
+```
+
+4. Push the branch.
+
+```bash
+git push origin feature/your-feature
+```
+
+5. Open a Pull Request.
+
+---
+
+# License
+
+This project was developed for **Odoo Hackathon 2026**.
+
+---
+
+# Support
+
+If you found this project useful, consider giving it a star on GitHub.
+
+Built during **Odoo Hackathon 2026**.
