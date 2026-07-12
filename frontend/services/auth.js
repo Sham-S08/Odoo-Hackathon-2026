@@ -1,22 +1,14 @@
 import api from "@/services/api";
 
-// export async function login({ email, password }) {
-//   const { data } = await api.post("/auth/login", { email, password });
-//   if (typeof window !== "undefined" && data.token) {
-//     window.localStorage.setItem("assetflow_token", data.token);
-//   }
-//   return data.user;
-// }
-
 export async function login({ email, password, role }) {
-  // TEMP: no backend yet — mock a successful login so the UI is browsable.
-  // Replace this with the real api.post("/auth/login", ...) call once the
-  // Node/Express API is running.
-  const user = { name: email.split("@")[0] || "Demo user", email, role: role || "Employee" };
-  if (typeof window !== "undefined") {
-    window.localStorage.setItem("assetflow_token", "demo-token");
+  const { data } = await api.post("/auth/login", { email, password });
+  if (typeof window !== "undefined" && data.token) {
+    window.localStorage.setItem(
+      process.env.NEXT_PUBLIC_TOKEN_KEY || "assetflow_token",
+      data.token
+    );
   }
-  return user;
+  return data.user;
 }
 
 export async function signup({ name, email, password }) {
@@ -31,6 +23,8 @@ export async function getProfile() {
 
 export async function logout() {
   if (typeof window !== "undefined") {
-    window.localStorage.removeItem("assetflow_token");
+    window.localStorage.removeItem(process.env.NEXT_PUBLIC_TOKEN_KEY || "assetflow_token");
   }
+  // Optional: Call logout API
+  // await api.post("/auth/logout");
 }

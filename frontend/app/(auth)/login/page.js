@@ -105,30 +105,30 @@ function LoginContent() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedRole) {
-      setError("Please select your role first");
-      return;
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!selectedRole) {
+    setError("Please select your role first");
+    return;
+  }
 
-    setError("");
-    setLoading(true);
-    setSuccess(false);
+  setError("");
+  setLoading(true);
+  setSuccess(false);
 
-    try {
-      const role = ROLES.find(r => r.id === selectedRole);
-      await login({ email, password, role: role?.label || "Employee" });
-      setSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 500);
-    } catch (err) {
-      setError("Couldn't log in. Check your email and password.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const role = ROLES.find(r => r.id === selectedRole);
+    await login({ email, password }); // Remove role from login call
+    setSuccess(true);
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 500);
+  } catch (err) {
+    setError(err.response?.data?.message || "Couldn't log in. Check your email and password.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const selectedRoleData = ROLES.find(r => r.id === selectedRole);
 
