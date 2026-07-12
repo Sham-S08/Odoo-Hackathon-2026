@@ -46,7 +46,7 @@ import {
   Shield
 } from "lucide-react";
 
-// Mock data
+// Mock data - updated with "Retire" recommendation
 const mockMaintenanceRequests = [
   {
     id: 1,
@@ -64,7 +64,6 @@ const mockMaintenanceRequests = [
     technicianAssigned: null,
     resolvedDate: null,
     notes: "Critical for development work",
-    // AI Insights
     aiInsight: {
       recommendation: "Repair",
       healthScore: 45,
@@ -88,7 +87,7 @@ const mockMaintenanceRequests = [
     resolvedDate: null,
     notes: "Vehicle needs to be ready for client visit",
     aiInsight: {
-      recommendation: "Maintenance",
+      recommendation: "Retire",
       healthScore: 68,
       reason: "AC system needs servicing. Engine noise suggests belt replacement. Schedule maintenance."
     }
@@ -110,7 +109,7 @@ const mockMaintenanceRequests = [
     resolvedDate: null,
     notes: "Replace toner and check rollers",
     aiInsight: {
-      recommendation: "Maintenance",
+      recommendation: "Monitor",
       healthScore: 72,
       reason: "Good condition with limited maintenance history. Routine maintenance recommended."
     }
@@ -212,6 +211,7 @@ const statusIcons = {
 const statusOrder = ["Pending", "Approved", "Technician Assigned", "In Progress", "Resolved"];
 
 // AI Insight Card Component
+// AI Insight Card Component
 const AIInsightCard = ({ insight }) => {
   if (!insight) return null;
 
@@ -225,8 +225,8 @@ const AIInsightCard = ({ insight }) => {
     switch (recommendation) {
       case "Repair":
         return <Wrench size={16} className="text-red-500" />;
-      case "Maintenance":
-        return <Activity size={16} className="text-amber-500" />;
+      case "Retire":
+        return <AlertTriangle size={16} className="text-gray-500" />;
       case "Monitor":
         return <HeartPulse size={16} className="text-green-500" />;
       default:
@@ -238,8 +238,8 @@ const AIInsightCard = ({ insight }) => {
     switch (recommendation) {
       case "Repair":
         return "bg-red-50 text-red-700 border-red-200";
-      case "Maintenance":
-        return "bg-amber-50 text-amber-700 border-amber-200";
+      case "Retire":
+        return "bg-gray-100 text-gray-700 border-gray-300";
       case "Monitor":
         return "bg-green-50 text-green-700 border-green-200";
       default:
