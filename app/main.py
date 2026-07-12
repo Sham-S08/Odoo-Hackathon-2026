@@ -51,3 +51,7 @@ app.include_router(health.router)
 # Include the V1 Router with the version prefix (GET/POST /api/v1/...)
 app.include_router(api_router, prefix="/api/v1")
 
+# Mount also on /api prefix to support /api/ai/maintenance-insights path directly
+app.include_router(api_router, prefix="/api")
+
+
