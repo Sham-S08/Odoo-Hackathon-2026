@@ -157,7 +157,7 @@ uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 *   **Response Payload Example:**
     ```json
     {
-      "recommendation": "Repair",
+      "recommendation": "REPAIR",
       "asset_health": 72,
       "reason": "Repair recommended. The asset exhibits wear (condition: 'Fair') but remains viable under normal maintenance."
     }

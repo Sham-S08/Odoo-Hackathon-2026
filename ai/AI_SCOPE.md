@@ -63,7 +63,7 @@ The AI module will read the following fields from the newly saved maintenance re
 
 ## 10. Outputs
 The AI module generates predictions and returns them to the ERP system or exposes them via REST:
-*   `recommendation`: A string indicating either `"Repair"` or `"Retire"`.
+*   `recommendation`: A string indicating either `"REPAIR"` or `"RETIRE"`.
 *   `asset_health`: An integer score between `0` and `100` summarizing the asset's current health.
 *   `reason`: A string explaining the rationale behind the recommendation.
 

@@ -44,7 +44,7 @@ class MaintenanceInsightsService:
 
             # Safe fallback output
             fallback_response = AIResponseSchema(
-                recommendation="Repair",
+                recommendation="REPAIR",
                 asset_health=50,
                 reason="AI recommendation temporarily unavailable. Manual review recommended.",
             )

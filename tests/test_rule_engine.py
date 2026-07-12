@@ -21,7 +21,7 @@ def test_excellent_condition_asset() -> None:
     engine = RuleEngine()
     recommendation, health_score, reason = engine.evaluate_asset(payload)
     assert health_score == 100
-    assert recommendation == "Repair"
+    assert recommendation == "REPAIR"
     assert "healthy baseline" in reason
 
 
@@ -48,7 +48,7 @@ def test_poor_condition_asset() -> None:
     # HS = 0.4*30 + 0.3*20 + 0.3*20 = 12 + 6 + 6 = 24
     assert health_score == 24
     assert health_score < RETIRE_THRESHOLD
-    assert recommendation == "Retire"
+    assert recommendation == "RETIRE"
     assert "physical state" in reason or "age" in reason or "repair" in reason
 
 
@@ -141,7 +141,7 @@ def test_boundary_scores() -> None:
     )
     recommendation, score, _ = engine.evaluate_asset(payload_repair)
     assert score == 51
-    assert recommendation == "Repair"
+    assert recommendation == "REPAIR"
 
     # Case 2: HS = 48 < 50 -> Retire
     # s_cond: 30 (Poor), s_age: 80 (3-5 years, e.g. 36 months), s_freq: 40 (3 failures)
@@ -163,7 +163,7 @@ def test_boundary_scores() -> None:
     )
     recommendation, score, _ = engine.evaluate_asset(payload_retire)
     assert score == 48
-    assert recommendation == "Retire"
+    assert recommendation == "RETIRE"
 
 
 @pytest.mark.anyio
@@ -189,6 +189,6 @@ async def test_rule_engine_exception_fallback() -> None:
     service.rule_engine.evaluate_asset = raise_error
 
     response = await service.get_insights(payload)
-    assert response.recommendation == "Repair"
+    assert response.recommendation == "REPAIR"
     assert response.asset_health == 50
     assert "temporarily unavailable" in response.reason

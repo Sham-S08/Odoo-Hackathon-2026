@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field, ConfigDict
 class AIResponseSchema(BaseModel):
     """Pydantic validation schema for the AI insights success response."""
 
-    recommendation: Literal["Repair", "Retire"] = Field(
-        ..., description="Recommended action for the asset: Repair or Retire."
+    recommendation: Literal["REPAIR", "RETIRE"] = Field(
+        ..., description="Recommended action for the asset: REPAIR or RETIRE."
     )
     asset_health: int = Field(
         ...,
@@ -25,7 +25,7 @@ class AIResponseSchema(BaseModel):
         extra="forbid",
         json_schema_extra={
             "example": {
-                "recommendation": "Repair",
+                "recommendation": "REPAIR",
                 "asset_health": 82,
                 "reason": "Good condition with low repair frequency.",
             }

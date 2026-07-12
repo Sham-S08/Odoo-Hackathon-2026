@@ -57,7 +57,7 @@ class RuleEngine:
         )
 
         # Step 3: Determine recommendation based on threshold
-        recommendation = "Repair" if health_score >= RETIRE_THRESHOLD else "Retire"
+        recommendation = "REPAIR" if health_score >= RETIRE_THRESHOLD else "RETIRE"
         logger.info(f"Recommendation generated: {recommendation}")
 
         # Step 4: Generate reason based on the dominant degradation component
@@ -118,7 +118,7 @@ class RuleEngine:
         }
         dominant_factor = max(deductions, key=deductions.get)
 
-        if recommendation == "Retire":
+        if recommendation == "RETIRE":
             if dominant_factor == "condition" and deductions["condition"] > 0:
                 return (
                     f"Retirement recommended as the physical state of the asset is rated as '{condition}', "

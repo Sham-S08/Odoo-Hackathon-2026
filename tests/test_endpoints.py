@@ -24,7 +24,7 @@ def test_maintenance_insights_success_full(client: TestClient) -> None:
     response = client.post("/api/ai/maintenance-insights", json=payload)
     assert response.status_code == 200
     data = response.json()
-    assert data["recommendation"] == "Repair"
+    assert data["recommendation"] == "REPAIR"
     assert data["asset_health"] == 72
     assert "reason" in data
 
@@ -48,7 +48,7 @@ def test_maintenance_insights_success_empty_history(client: TestClient) -> None:
     response = client.post("/api/ai/maintenance-insights", json=payload)
     assert response.status_code == 200
     data = response.json()
-    assert data["recommendation"] == "Repair"
+    assert data["recommendation"] == "REPAIR"
 
 
 def test_maintenance_insights_invalid_asset_id(client: TestClient) -> None:

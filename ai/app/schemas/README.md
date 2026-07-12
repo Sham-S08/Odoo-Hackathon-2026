@@ -75,13 +75,13 @@ This folder contains the Pydantic v2 schemas used for incoming request payload v
 ## 4. AI Response Schema (`AIResponseSchema`)
 *   **Purpose:** Standard success response structure returned to the Node.js/Express backend after evaluation.
 *   **Validation Rules:**
-    *   `recommendation`: String strictly constrained to either `"Repair"` or `"Retire"`.
+    *   `recommendation`: String strictly constrained to either `"REPAIR"` or `"RETIRE"`.
     *   `asset_health`: Integer between `0` and `100` inclusive (`ge=0, le=100`).
     *   `reason`: Non-empty string justifying the decision.
 *   **Example JSON:**
     ```json
     {
-      "recommendation": "Repair",
+      "recommendation": "REPAIR",
       "asset_health": 82,
       "reason": "Good condition with low repair frequency."
     }

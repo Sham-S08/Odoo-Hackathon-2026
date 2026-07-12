@@ -74,7 +74,7 @@ The response body returns only the three official fields specified in the hackat
 2.  `reported_at` and `last_maintenance_date` must conform to standard ISO 8601 date-time patterns.
 3.  `description` must not be empty and must have a minimum length of 5 characters.
 4.  `asset_health` output will always be normalized as an integer between `0` and `100`.
-5.  `recommendation` must strictly return either `"Repair"` or `"Retire"`.
+5.  `recommendation` must strictly return either `"REPAIR"` or `"RETIRE"`.
 
 ### HTTP Status Codes
 | Code | Status | Scenario |
@@ -105,7 +105,7 @@ The response body returns only the three official fields specified in the hackat
 ### Sample Success Response (`200 OK`)
 ```json
 {
-  "recommendation": "Repair",
+  "recommendation": "REPAIR",
   "asset_health": 82,
   "reason": "Good condition with low repair frequency."
 }

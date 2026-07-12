@@ -74,12 +74,12 @@ def test_ai_request_schema_validation() -> None:
 def test_ai_response_schema_validation() -> None:
     """Validates response range and recommendation enums."""
     valid_response = {
-        "recommendation": "Repair",
+        "recommendation": "REPAIR",
         "asset_health": 85,
         "reason": "Stable operation history.",
     }
     res = AIResponseSchema(**valid_response)
-    assert res.recommendation == "Repair"
+    assert res.recommendation == "REPAIR"
     assert res.asset_health == 85
 
     # Out of bounds health score
